@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.student.dao.StudentMapper">
+    <select id="selectStudent" parameterType="map" resultType="Student">
+        SELECT s.studentNo,s.studentName,s.password,s.age,g.gradeName from student s
+        INNER JOIN grade g
+        on(s.gradeId=g.gradeId)
+        limit #{pageNo},#{pageSize}
+    </select>
+    <select id="getCont" resultType="int">
+        SELECT COUNT(*) from student
+    </select>
+    <select id="selectGrade" resultType="Grade">
+        SELECT * from grade
+    </select>
+    <insert id="addStudent" parameterType="Student">
+        insert into student(studentName,password,age,gradeId) values(#{studentName},#{password},#{age},#{gradeId})
+    </insert>
+    <delete id="delStudent" parameterType="String">
+        delete from student where studentNo=#{studentNo}
+    </delete>
+    <select id="updateSelect" resultType="Student" parameterType="String">
+        SELECT * from student WHERE studentNo=#{studentNo}
+    </select>
+    <update id="updateStudent"  parameterType="Student">
+        UPDATE student SET studentName=#{studentName},password=#{password},age=#{age},gradeId=#{gradeId} where studentNo=#{studentNo}
+    </update>
+</mapper>
+
